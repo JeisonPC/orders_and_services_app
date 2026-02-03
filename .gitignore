@@ -1,0 +1,17 @@
+# Ruby / Rails
+*.log
+tmp/
+log/
+storage/
+.bundle/
+vendor/bundle
+vendor/cache
+
+# Node
+node_modules/
+
+# Docker
+.env
+
+# OS
+.DS_Store
