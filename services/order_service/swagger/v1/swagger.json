@@ -1,0 +1,88 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Order Service API",
+    "version": "v1"
+  },
+  "paths": {
+    "/orders": {
+      "get": {
+        "summary": "Lista pedidos por customer_id",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea un pedido",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "creado"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "order": {
+                    "type": "object",
+                    "required": [
+                      "customer_id",
+                      "product_name",
+                      "quantity",
+                      "price",
+                      "status"
+                    ],
+                    "properties": {
+                      "customer_id": {
+                        "type": "integer"
+                      },
+                      "product_name": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer"
+                      },
+                      "price": {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "variables": {}
+    }
+  ]
+}
