@@ -8,13 +8,21 @@ class OrdersController < ApplicationController
   end
 
   def create
+    client = CustomerServiceClient.new
+    customer = client.fetch_customer(order_params[:customer_id])
+  
     order = Order.new(order_params)
 
     if order.save
+      OrderEventPublisher.new.publish_order_created(order_id: order.id, customer_id: order.customer_id)
       render json: order, status: :created
     else
       render json: { errors: order.errors.full_messages }, status: :unprocessable_entity
     end
+    rescue CustomerServiceClient::NotFound => e
+      render json: { error: e.message }, status: :unprocessable_entity
+    rescue CustomerServiceClient::Unavailable => e
+      render json: { error: "Customer service unavailable", detail: e.message }, status: :service_unavailable
   end
 
   private
