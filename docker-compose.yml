@@ -1,0 +1,72 @@
+version: "3.9"
+
+services:
+  postgres_orders:
+    image: postgres:16
+    container_name: postgres_orders
+    environment:
+      POSTGRES_DB: order_service_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_orders:/var/lib/postgresql/data
+
+  postgres_customers:
+    image: postgres:16
+    container_name: postgres_customers
+    environment:
+      POSTGRES_DB: customer_service_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg_customers:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
+  order_service:
+    build: ./services/order_service
+    container_name: order_service
+    environment:
+      PORT: 3001
+      DB_HOST: postgres_orders
+      DB_NAME: order_service_development
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME_TEST: order_service_test
+    depends_on:
+      - postgres_orders
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./services/order_service:/app
+
+  customer_service:
+    build: ./services/customer_service
+    container_name: customer_service
+    environment:
+      PORT: 3002
+      DB_HOST: postgres_customers
+      DB_NAME: customer_service_development
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME_TEST: customer_service_test
+    depends_on:
+      - postgres_customers
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./services/customer_service:/app
+
+
+volumes:
+  pg_orders:
+  pg_customers:
