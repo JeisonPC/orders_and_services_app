@@ -6,7 +6,7 @@ Plataforma compuesta por dos microservicios Rails (`order_service` y `customer_s
 
 ![Espacio reservado para el diagrama](docs/Diagram_Orders_and_service_app.png)
 
-[Consulta el diagrama completo en Figma](https://www.figma.com/board/vlndLcf3X90fskqIEB22Ai/Diagrama--Orders_and_service_app?node-id=0-1&t=gRiRmrMnu1SgIoZe-1).
+<a href="https://www.figma.com/board/vlndLcf3X90fskqIEB22Ai/Diagrama--Orders_and_service_app?node-id=0-1&t=gRiRmrMnu1SgIoZe-1" target="_blank" rel="noopener noreferrer">Consulta el diagrama completo en Figma</a>.
 
 
 ## Tecnologías principales
