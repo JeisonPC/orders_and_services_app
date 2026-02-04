@@ -6,7 +6,8 @@ Plataforma compuesta por dos microservicios Rails (`order_service` y `customer_s
 
 ![Espacio reservado para el diagrama](docs/Diagram_Orders_and_service_app.png)
 
-> Reemplaza la imagen anterior por el diagrama definitivo (por ejemplo, un archivo generado con draw.io dentro de `docs/`).
+[Consulta el diagrama completo en Figma](https://www.figma.com/board/vlndLcf3X90fskqIEB22Ai/Diagrama--Orders_and_service_app?node-id=0-1&t=gRiRmrMnu1SgIoZe-1).
+
 
 ## Tecnologías principales
 
@@ -113,9 +114,3 @@ Cada servicio incluye scripts en `bin/` (como `bin/kamal`) y configuraciones en 
 | Migraciones no aplican | Revisa que el contenedor Postgres correspondiente esté corriendo y elimina datos persistidos con `docker volume rm` si necesitas un reset. |
 | RabbitMQ no recibe eventos | Valida `RABBITMQ_HOST` dentro del contenedor (`docker compose exec order_service env`). |
 | Cambios en código no reflejan | Verifica que los volúmenes `./services/...:/app` sigan montados y reinicia `docker compose restart <service>`. |
-
-## Próximos pasos sugeridos
-
-1. Sustituir el placeholder del diagrama por la arquitectura real.
-2. Documentar endpoints REST (p. ej. `services/order_service/swagger/`).
-3. Añadir ejemplos de payloads de eventos y contratos API entre servicios.
