@@ -47,10 +47,13 @@ services:
       RABBITMQ_PASSWORD: guest
     depends_on:
       - postgres_orders
+      - rabbitmq
+      - customer_service
     ports:
       - "3001:3001"
     volumes:
       - ./services/order_service:/app
+    command: bash -lc "rm -f /app/tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0 -p 3001"
 
   customer_service:
     build: ./services/customer_service
@@ -66,13 +69,14 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USER: guest
       RABBITMQ_PASSWORD: guest
-
     depends_on:
       - postgres_customers
+      - rabbitmq
     ports:
       - "3002:3002"
     volumes:
       - ./services/customer_service:/app
+    command: bash -lc "rm -f /app/tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0 -p 3002"
 
 
 volumes:

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
+
   get "/health", to: "health#show"
-  get "/customers/:id", to: "customers#show"
+  resources :customers, only: %i[index show]
 end
