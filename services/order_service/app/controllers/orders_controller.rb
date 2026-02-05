@@ -3,8 +3,27 @@ class OrdersController < ApplicationController
     customer_id = params[:customer_id]
     return render json: { error: "customer_id is required" }, status: :bad_request if customer_id.blank?
 
-    orders = Order.where(customer_id: customer_id).order(created_at: :desc)
-    render json: orders
+    page = (params[:page] || 1).to_i
+    per_page = (params[:per_page] || 10).to_i
+    per_page = [ [ per_page, 1 ].max, 100 ].min # Entre 1 y 100
+
+    orders = Order.where(customer_id: customer_id)
+                  .order(created_at: :desc)
+                  .limit(per_page)
+                  .offset((page - 1) * per_page)
+
+    total = Order.where(customer_id: customer_id).count
+    total_pages = (total.to_f / per_page).ceil
+
+    render json: {
+      data: orders,
+      pagination: {
+        current_page: page,
+        per_page: per_page,
+        total_items: total,
+        total_pages: total_pages
+      }
+    }
   end
 
   def create

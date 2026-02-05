@@ -7,6 +7,8 @@ RSpec.describe "Orders API", type: :request do
       tags "Orders"
       produces "application/json"
       parameter name: :customer_id, in: :query, type: :integer, required: true
+      parameter name: :page, in: :query, type: :integer, required: false, description: "Número de página (default: 1)"
+      parameter name: :per_page, in: :query, type: :integer, required: false, description: "Cantidad por página (default: 10, max: 100)"
 
       response "200", "ok" do
         let(:customer_id) { 1 }

@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => "/api-docs"
 
   get "/health", to: "health#show"
-  resources :customers, only: %i[index show]
+  resources :customers, only: [ :index, :show ]
 end
